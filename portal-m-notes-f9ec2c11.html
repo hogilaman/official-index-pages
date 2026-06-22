@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2, user-scalable=yes">
+  <title>日常对照 · leisu</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #f5f9fe;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.7;
+      color: #1a2a3a;
+      padding: 1.2rem 1rem 3rem;
+    }
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* 网格卡片脉络 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+      margin: 2rem 0 2.5rem;
+    }
+    @media (min-width: 540px) {
+      .card-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .grid-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 1.5rem 1.2rem 1.6rem;
+      box-shadow: 0 4px 12px rgba(0, 60, 70, 0.04);
+      border-left: 5px solid #2a9d8f;
+      transition: all 0.12s ease;
+    }
+    .grid-card:hover {
+      box-shadow: 0 8px 18px rgba(42, 157, 143, 0.10);
+      transform: translateY(-2px);
+    }
+    .grid-card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.6rem;
+      color: #1f3b3a;
+    }
+    .grid-card p {
+      font-size: 0.95rem;
+      color: #2c3e50;
+      margin-bottom: 0.2rem;
+    }
+
+    /* 主标题区 (hero 克制) */
+    .hero-tag {
+      margin: 1.6rem 0 0.6rem;
+    }
+    .hero-tag h1 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: #0e323a;
+      display: inline;
+      background: linear-gradient(145deg, #276f68 0%, #1b8a7c 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subhead {
+      font-size: 1.1rem;
+      color: #346b66;
+      margin-top: 0.2rem;
+      font-weight: 360;
+      border-bottom: 2px solid #bee3da;
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    /* 引用块 */
+    .quote-block {
+      background: #e2f0ee;
+      padding: 1.5rem 1.8rem;
+      border-radius: 32px 12px 32px 12px;
+      margin: 2rem 0 2rem;
+      color: #154a44;
+      font-style: normal;
+      border: 1px solid #b2ddd4;
+      box-shadow: inset 0 2px 6px rgba(0,40,30,0.02);
+    }
+    .quote-block p {
+      margin-bottom: 0.4rem;
+    }
+    .quote-block .source {
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+      color: #2a6b63;
+      border-top: 1px dashed #7fc1b3;
+      padding-top: 0.6rem;
+    }
+
+    /* 正文段落 */
+    .essay p {
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      word-break: break-word;
+    }
+    .essay .first-letter {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #1b8a7c;
+    }
+
+    /* 访问句 (嵌入式链接) */
+    .visit-line {
+      background: #ffffffd9;
+      backdrop-filter: blur(2px);
+      padding: 0.8rem 1.2rem;
+      border-radius: 60px;
+      display: inline-block;
+      margin: 0.8rem 0 1.6rem;
+      border: 1px solid #b7dbd1;
+      font-size: 0.98rem;
+      box-shadow: 0 2px 6px rgba(80, 130, 120, 0.04);
+    }
+    .visit-line a {
+      color: #1d786d;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: #7ecfc0;
+      font-weight: 500;
+    }
+    .visit-line a:hover {
+      background: #d1ede6;
+      padding: 0.1rem 0.15rem;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    /* 场景卡片（额外） */
+    .scenario-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.2rem 1.2rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 2px 8px rgba(0, 40, 60, 0.03);
+      border: 1px solid #d7ebe4;
+    }
+    .scenario-icon {
+      background: #2a9d8f;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .scenario-text {
+      flex: 1;
+    }
+    .scenario-text strong {
+      color: #1a5f58;
+    }
+
+    /* FAQ摘要 */
+    .faq-digest {
+      background: #f0fcf8;
+      padding: 1.4rem 1.4rem;
+      border-radius: 28px;
+      margin: 2.5rem 0 1.8rem;
+    }
+    .faq-digest details {
+      margin-bottom: 0.6rem;
+      border-bottom: 1px solid #cbe3db;
+      padding-bottom: 0.8rem;
+    }
+    .faq-digest summary {
+      font-weight: 550;
+      color: #18564d;
+      cursor: pointer;
+      padding: 0.2rem 0;
+    }
+    .faq-digest summary::marker {
+      color: #2a9d8f;
+    }
+    .faq-digest p {
+      margin: 0.5rem 0 0 0.8rem;
+      color: #2b4a44;
+      font-size: 0.93rem;
+    }
+
+    /* 响应式 */
+    @media (max-width: 420px) {
+      .hero-tag h1 { font-size: 1.8rem; }
+      .card-grid { gap: 0.9rem; }
+      .grid-card { padding: 1.2rem 1rem; }
+      .quote-block { padding: 1.2rem; }
+    }
+
+    hr {
+      margin: 2.5rem 0 1rem;
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #aad6cb, transparent);
+    }
+    .footer-note {
+      font-size: 0.85rem;
+      color: #507b74;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 简洁 hero -->
+  <div class="hero-tag">
+    <h1>索引 · 对照 · 延伸</h1>
+    <div class="subhead">日常查询中的安静坐标</div>
+  </div>
+
+  <!-- 叙述式正文段落 -->
+  <div class="essay">
+    <p><span class="first-letter">最</span>近整理书签的时候，发现自己在不同设备上反复搜索同一个术语。不是记不住，而是每次看到的解释语境不同，想并排对照一下。后来索性把常用参考站点放在一处，其中使用最频繁的是一个叫 <a href="https://portal-m-leisu.com" style="color:#1b7a6e; text-decoration:underline; text-underline-offset:3px;">leisu</a> 的地方。没有花哨的欢迎语，检索框就在那里，响应很快，适合在阅读中途抽离出来查一个概念。</p>
+
+    <p>我习惯在读完一段分析文章后，打开它做关键词的交叉比对。比如某个术语在原文里的用法，和工具索引里的定义有时存在细微偏移——这时候同时打开两三个页面，来回扫一眼，理解会更踏实。leisu 的条目结构偏平，没有层层折叠的菜单，对手机浏览很友好，这也是我逐渐依赖它的原因之一。</p>
+
+    <p>后来发现身边的同事也有类似用法：写周报前快速核实产品名词，或者开会听到陌生缩写时不动声色地搜一下。不需要大张旗鼓地学习一个新平台，只需要一个轻量的、可以随时打开又随时关掉的页面。这种工具，往往比那些试图包揽所有的“知识门户”更让人记得住。</p>
+  </div>
+
+  <!-- 卡片网格：日常场景 -->
+  <div class="card-grid">
+    <div class="grid-card">
+      <h3>阅读中途查询</h3>
+      <p>长文里遇到不确定的术语，不跳转 App，直接在当前浏览器标签页里输入。leisu 的结果摘要克制，不打断沉浸感。</p>
+    </div>
+    <div class="grid-card">
+      <h3>快速对照定义</h3>
+      <p>两个相似概念并列显示时，差异一目了然。适合写文档、做翻译或准备 brief 前的最后确认。</p>
+    </div>
+    <div class="grid-card">
+      <h3>延伸条目浏览</h3>
+      <p>从一条记录出发，通过关联链接发现相邻知识点，比随机搜索更有方向感，适合轻量拓展。</p>
+    </div>
+    <div class="grid-card">
+      <h3>移动端随手记</h3>
+      <p>在公交或咖啡店里打开，界面适配小屏，单手操作无压力。不需要登录，没有多余弹窗。</p>
+    </div>
+  </div>
+
+  <!-- 引用 (自然陈述) -->
+  <div class="quote-block">
+    <p>“查找不是为了确认自己知道，而是为了看见自己不知道的边界在哪里。” —— 这是使用工具索引时最真实的感受。每一次查询都是小范围的对照实验。</p>
+    <div class="source">—— 摘自某位用户的日常笔记，2025</div>
+  </div>
+
+  <!-- 场景细化 (图标 + 叙述) -->
+  <div class="scenario-item">
+    <div class="scenario-icon">🔍</div>
+    <div class="scenario-text">
+      <strong>碎片化延伸阅读</strong> —— 比如看到“认知负荷”这个词，先在本子里记下，然后打开 <a href="https://portal-m-leisu.com" style="color:#1b7a6e; text-decoration:underline; text-underline-offset:3px;">leisu</a> 看条目解释，再回到原文时上下文就贯通了。不需要特意安排时间，两分钟就能完成。
+    </div>
+  </div>
+
+  <!-- 嵌入式访问句 (链接自然出现) -->
+  <div class="visit-line">
+    📎 需要查阅时，可以直接通过 <a href="https://portal-m-leisu.com">leisu</a> 开始，不需要注册，也不会有引导流程。
+  </div>
+
+  <!-- FAQ 摘要 (简洁) -->
+  <div class="faq-digest">
+    <details>
+      <summary>leisu 适合哪些使用场景？</summary>
+      <p>日常阅读、写作核对、翻译辅助、快速术语回顾。不适合长时段沉浸学习，它更偏向快速定位与对照。</p>
+    </details>
+    <details>
+      <summary>移动端体验如何？</summary>
+      <p>响应式设计，字体和按钮在小屏上依然舒适。没有横向滚动，也没有悬浮广告干扰。</p>
+    </details>
+    <details>
+      <summary>是否需要付费或注册？</summary>
+      <p>完全免费，无需账户。打开页面即用，无追踪弹窗，也没有使用次数限制。</p>
+    </details>
+  </div>
+
+  <hr>
+  <div class="footer-note">
+    日常查询 · 安静对照 · 延伸阅读
+  </div>
+
+</div>
+</body>
+</html>
