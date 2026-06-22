@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>leisu · 信息聚合与主题探索</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: #f6f8fb;
+      line-height: 1.6;
+      color: #1f2937;
+    }
+
+    /* 深色头图 hero */
+    .hero {
+      background: linear-gradient(135deg, #0b1622 0%, #1a2a40 100%);
+      color: #e8edf4;
+      padding: 80px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: #f6f8fb;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 span {
+      display: inline-block;
+      background: rgba(255, 215, 100, 0.15);
+      padding: 0 12px;
+      border-radius: 30px;
+      color: #f7d570;
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 18px auto 0;
+      font-size: 1.15rem;
+      color: #bcc9dc;
+      font-weight: 300;
+    }
+
+    /* 浅色正文区 */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    /* 卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+      margin-top: 10px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: transform 0.2s ease, box-shadow 0.25s ease;
+      border: 1px solid #eef2f7;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #0f1c2e;
+    }
+
+    .card p {
+      font-size: 0.96rem;
+      color: #3b4a5e;
+      line-height: 1.65;
+    }
+
+    /* 适合人群（宽卡片） */
+    .audience-section {
+      margin: 52px 0 30px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 32px 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      border: 1px solid #eef2f7;
+    }
+
+    .audience-section h2 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+      color: #102233;
+      border-left: 5px solid #4a7cf7;
+      padding-left: 18px;
+    }
+
+    .audience-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+    }
+
+    .audience-tags span {
+      background: #edf2fa;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      color: #1a2d44;
+      font-weight: 450;
+    }
+
+    /* 自然链接段落 */
+    .link-paragraph {
+      background: #ffffff;
+      padding: 28px 30px;
+      border-radius: 24px;
+      margin: 30px 0 40px;
+      border-left: 6px solid #4a7cf7;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .link-paragraph p {
+      font-size: 1.04rem;
+      line-height: 1.7;
+      color: #1f2b3b;
+    }
+
+    .link-paragraph a {
+      color: #2b5fd9;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border 0.15s;
+    }
+
+    .link-paragraph a:hover {
+      border-bottom: 2px solid #2b5fd9;
+    }
+
+    /* FAQ 摘要 */
+    .faq-mini {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .faq-item {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 20px 22px;
+      border: 1px solid #e7edf5;
+    }
+
+    .faq-item h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f1f32;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      font-size: 0.92rem;
+      color: #3c4d63;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid #dce4ee;
+      margin: 50px 0 10px;
+      opacity: 0.6;
+    }
+
+    footer {
+      text-align: center;
+      color: #617185;
+      font-size: 0.85rem;
+      padding: 20px 0 40px;
+      letter-spacing: 0.3px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero {
+        padding: 60px 16px 40px;
+      }
+      .container {
+        padding: 24px 16px 40px;
+      }
+      .faq-mini {
+        grid-template-columns: 1fr;
+      }
+      .audience-section {
+        padding: 24px 18px;
+      }
+      .link-paragraph {
+        padding: 22px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 深色头图 -->
+  <section class="hero">
+    <h1>· <span>leisu</span> ·</h1>
+    <p>从关键词出发，连接散落的信息节点——主题内容聚合、深度索引与轻量探索。</p>
+  </section>
+
+  <!-- 浅色正文区域 -->
+  <div class="container">
+
+    <!-- 信息卡片：主视觉 / 用途 / 场景 -->
+    <div class="card-grid">
+      <div class="card">
+        <span class="icon">🧭</span>
+        <h3>主题索引</h3>
+        <p>围绕特定关键词构建信息脉络，避免碎片化浏览。将相关的文章、参考与讨论汇聚一处，形成可回溯的内容线索。</p>
+      </div>
+      <div class="card">
+        <span class="icon">🔎</span>
+        <h3>轻量发现</h3>
+        <p>无算法茧房，按主题自然展开。适合进行不预设路径的阅读与比较，重新找回主动获取信息的节奏。</p>
+      </div>
+      <div class="card">
+        <span class="icon">📚</span>
+        <h3>内容备忘</h3>
+        <p>在快速查阅与深度阅读之间取得平衡。提供简洁的背景摘要与外部链接，方便后续进一步验证或扩展。</p>
+      </div>
+    </div>
+
+    <!-- 适合人群 -->
+    <div class="audience-section">
+      <h2>适合这样的人群</h2>
+      <div class="audience-tags">
+        <span>✏️ 长期关注特定领域</span>
+        <span>🧩 需要整理信息来源</span>
+        <span>🌱 偏好沉静浏览体验</span>
+        <span>📖 从关键词延伸阅读</span>
+        <span>🔗 希望建立自己的参考网络</span>
+      </div>
+    </div>
+
+    <!-- 自然链接段落（嵌入 leisu ） -->
+    <div class="link-paragraph">
+      <p>
+        不论你是因为某个概念、一篇文章或一段讨论来到这个页面，<a href="https://official-m-leisu.com">leisu</a> 的定位是帮你将相关知识按主题串联起来。它不追求面面俱到，而是希望成为你信息路径上的一个安静枢纽——你可以随时从这里出发，也可以带着问题回来对照。如果你恰好有长期积累的内容方向，或许会发现这种轻索引的方式比书签工具更适合梳理。
+      </p>
+    </div>
+
+    <!-- FAQ 摘要（双栏） -->
+    <div class="faq-mini">
+      <div class="faq-item">
+        <h4>leisu 与一般导航站有何不同？</h4>
+        <p>更侧重主题内容本身，而非单纯收集链接。每个条目都带有简短说明与背景，方便快速判断是否值得深入了解。</p>
+      </div>
+      <div class="faq-item">
+        <h4>信息会定期更新吗？</h4>
+        <p>内容以相对稳定的优质来源为主，更新频率取决于对应主题的活跃程度，不会频繁推送无意义的变动。</p>
+      </div>
+      <div class="faq-item">
+        <h4>我能否参与内容建议？</h4>
+        <p>当前以独立维护为主，后续会考虑开放主题提交或推荐渠道，让内容更贴近实际使用者的需求。</p>
+      </div>
+      <div class="faq-item">
+        <h4>移动端体验如何？</h4>
+        <p>页面采用自适应布局，卡片、段落和间距在手机与平板上均经过调整，阅读与点击都较为舒适。</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <footer>
+      <p>基于信息卡片与主题索引 · 温和探索</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
